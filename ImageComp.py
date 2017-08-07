@@ -1,10 +1,13 @@
 from PIL import Image
 import math
 import numpy
+# Class to allow keeping track of x and y easier
 class Point(object):
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
+
+
 class Pixel(object):
 	def __init__(self, color = [0, 0, 0], topLeft = Point(0, 0), bottomRight = Point(0, 0)):
 		self.R = color[0]
@@ -29,7 +32,6 @@ class quadtree():
 		while(size >= 1):
 			self.size += size
 			size /= 4
-
 		size = image.size[0] * image.size[1]
 		# Initialize array elements
 		for i in range(0, self.size):
@@ -50,6 +52,9 @@ class quadtree():
 				 (self.tree[4 * i + 1].G + self.tree[4 * i + 2].G + self.tree[4 * i + 3].G + self.tree[4 * i + 4].G) / 4,
 				 (self.tree[4 * i + 1].B + self.tree[4 * i + 2].B + self.tree[4 * i + 3].B + self.tree[4 * i + 4].B) / 4],
 				 self.tree[4 * i + 1].topLeft, self.tree[4 * i + 4].bottomRight)
+		f = open("File.txt", "w")
+		for i in range(0, self.size):
+			f.write(str(i) + " " + str(self.tree[i].topLeft.x) + " " + str(self.tree[i].topLeft.y) + " " + str(self.tree[i].bottomRight.x) + " " + str(self.tree[i].bottomRight.y) + "\n")
 
 	def disp(self, level):
 		start = 0
